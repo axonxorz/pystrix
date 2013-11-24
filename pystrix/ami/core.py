@@ -966,6 +966,7 @@ class QueueRemove(_Request):
         self['Queue'] = queue
         self['Interface'] = interface
 
+
 class QueueStatus(_Request):
     """
     Describes the status of one (or all) queues.
@@ -980,6 +981,23 @@ class QueueStatus(_Request):
         _Request.__init__(self, "QueueStatus")
         if not queue is None:
             self['Queue'] = queue
+            
+            
+class QueueSummary(_Request):
+    """
+    Describes the summary of one (or all) queues.
+
+    Upon success, 'QueueSummary' event(s) will be generated, ending
+    with 'QueueSummaryComplete'.
+    """
+    def __init__(self, queue=None):
+        """
+        Summarizes all queues in the system, unless `queue` is given, which limits the scope to one.
+        """
+        _Request.__init__(self, "QueueSummary")
+        if not queue is None:
+            self['Queue'] = queue
+
 
 class Redirect(_Request):
     """

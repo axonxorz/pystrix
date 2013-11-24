@@ -567,7 +567,7 @@ class QueueParams(_Message):
     - 'ActionID' (optional): The ID associated with the original request, if a response
     - 'Calls': The number of current calls in the queue
     - 'Completed': The number of completed calls
-    - 'Holdtime': ?
+    - 'HoldTime': The average hold time in the queue
     - 'Max': ?
     - 'Queue': The queue being described
     - 'ServiceLevel': ?
@@ -576,7 +576,7 @@ class QueueParams(_Message):
     """
     def process(self):
         """
-        Translates the 'Abandoned', 'Calls', 'Completed', 'Holdtime', and 'Max' headers' values into
+        Translates the 'Abandoned', 'Calls', 'Completed', 'HoldTime', and 'Max' headers' values into
         ints, setting them to -1 on error.
         
         Translates the 'ServiceLevel', 'ServiceLevelPerf', and 'Weight' values into
@@ -584,7 +584,7 @@ class QueueParams(_Message):
         """
         (headers, data) = _Message.process(self)
         
-        for header in ('Abandoned', 'Calls', 'Completed', 'Holdtime', 'Max'):
+        for header in ('Abandoned', 'Calls', 'Completed', 'HoldTime', 'Max'):
             try:
                 headers[header] = int(headers.get(header))
             except Exception:
@@ -597,10 +597,48 @@ class QueueParams(_Message):
                 headers[header] = -1
         
         return (headers, data)
-        
+
+          
 class QueueStatusComplete(_Message):
     """
     Indicates that a QueueStatus request has completed.
+    
+    - 'ActionID': The ID associated with the original request
+    """
+    
+         
+class QueueSummary(_Message):
+    """
+    Describes the summary of a queue.
+    
+    - 'Available': The number of agents available
+    - 'ActionID' (optional): The ID associated with the original request, if a response
+    - 'Callers': The number of callers
+    - 'HoldTime': The average hold time in the queue
+    - 'LoggedIn': The number of agents that are logged
+    - 'LongestHoldTime': The number of completed calls
+    - 'Queue': The queue being summarized
+    - 'TalkTime': The average talking time
+    """
+    def process(self):
+        """
+        Translates the 'Available', 'Callers', 'HoldTime', 'LoggedIn', 'LongestHoldTime' and 'TalkTime' headers' values into
+        ints, setting them to -1 on error.
+        """
+        (headers, data) = _Message.process(self)
+        
+        for header in ('Available', 'Callers', 'HoldTime', 'LoggedIn', 'LongestHoldTime', 'TalkTime'):
+            try:
+                headers[header] = int(headers.get(header))
+            except Exception:
+                headers[header] = -1
+        
+        return (headers, data)
+ 
+    
+class QueueSummaryComplete(_Message):
+    """
+    Indicates that a QueueSummary request has completed.
     
     - 'ActionID': The ID associated with the original request
     """
