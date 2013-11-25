@@ -567,7 +567,7 @@ class QueueParams(_Message):
     - 'ActionID' (optional): The ID associated with the original request, if a response
     - 'Calls': The number of current calls in the queue
     - 'Completed': The number of completed calls
-    - 'HoldTime': The average hold time in the queue
+    - 'Holdtime': The average hold time in the queue
     - 'Max': ?
     - 'Queue': The queue being described
     - 'ServiceLevel': ?
@@ -576,7 +576,7 @@ class QueueParams(_Message):
     """
     def process(self):
         """
-        Translates the 'Abandoned', 'Calls', 'Completed', 'HoldTime', and 'Max' headers' values into
+        Translates the 'Abandoned', 'Calls', 'Completed', 'Holdtime', and 'Max' headers' values into
         ints, setting them to -1 on error.
         
         Translates the 'ServiceLevel', 'ServiceLevelPerf', and 'Weight' values into
@@ -584,7 +584,7 @@ class QueueParams(_Message):
         """
         (headers, data) = _Message.process(self)
         
-        for header in ('Abandoned', 'Calls', 'Completed', 'HoldTime', 'Max'):
+        for header in ('Abandoned', 'Calls', 'Completed', 'Holdtime', 'Max'):
             try:
                 headers[header] = int(headers.get(header))
             except Exception:
