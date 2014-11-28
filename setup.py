@@ -4,7 +4,7 @@ Deployment script for pystrix.
 """
 __author__ = 'Neil Tallim'
 
-from distutils.core import setup
+from setuptools import setup
 
 from pystrix import VERSION
 
