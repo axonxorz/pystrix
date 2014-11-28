@@ -670,7 +670,12 @@ class _SynchronisedSocket(object):
         """
         Release resources associated with this connection.
         """
-        with self._socket_write_lock as write_lock:
+        try:
+            with self._socket_write_lock as write_lock:
+                self._close()
+        except AttributeError:
+            # If the connection was never establised, self._socket_write lock
+            # is none. Ignore errors acquiring it and close the socket anyway
             self._close()
             
     def _close(self):
