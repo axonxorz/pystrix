@@ -14,7 +14,7 @@ Usage
 
 Importing this package, or the 'agi' or 'ami' sub-packages is recommended over
 importing individual modules.
- 
+
 Legal
 -----
 
@@ -32,7 +32,7 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU General Public License and
 GNU Lesser General Public License along with this program. If not, see
 <http://www.gnu.org/licenses/>.
- 
+
 (C) Ivrnet, inc., 2011
 
 Authors:
@@ -42,5 +42,5 @@ Authors:
 import agi
 import ami
 
-VERSION = '0.9.4'
+VERSION = '0.9.4a'
 
